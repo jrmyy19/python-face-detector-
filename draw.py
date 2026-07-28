@@ -17,5 +17,5 @@ red=0,0,255
 #cv.imshow("circle",blank)
 #write text 
 cv.putText(blank,"hello",(225,225),cv.FONT_HERSHEY_TRIPLEX,1.0,green,2)
-cv.imshow("hello",blank)
+cv.imshow("hello ,world ",blank)
 cv.waitKey(0)
