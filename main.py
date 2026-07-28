@@ -6,7 +6,7 @@ def rescaleImage(frame,scale=0.75):
     height =int(frame.shape[0]*scale)
     dimensions= (width,height)
     return cv.resize(frame,dimensions,interpolation=cv.INTER_AREA)
-def changeresolution(width,height):
+def changeResolution(width,height):
     #live video
     capture.set(3,width)
     capture.set(4,height)
