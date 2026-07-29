@@ -1,28 +1,30 @@
-import cv2 as cv
-img= cv.imread("senegal-flag.jpg")
-def rescaleImage(frame,scale=0.75):
-    # image photo and live video
-    width=int(frame.shape[1]*scale)
-    height =int(frame.shape[0]*scale)
-    dimensions= (width,height)
-    return cv.resize(frame,dimensions,interpolation=cv.INTER_AREA)
-def changeResolution(width,height):
-    #live video
-    capture.set(3,width)
-    capture.set(4,height)
- 
+import cv2
+import time
 
-rescaledPhoto=rescaleImage(img)
-cv.imshow("senegal",rescaledPhoto)
+cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
 
-capture= cv.VideoCapture("video.mp4")
+if not cap.isOpened():
+    print("Error: Could not open webcam.")
+    exit()
+
+# Let the camera sensor physically initialize 
+time.sleep(1.0) 
+
+# Burn 20 frames to let auto-exposure adjust
+for _ in range(20):
+    cap.read()
+
+print("Camera warmed up! Starting stream...")
+
 while True:
-    isTrue, frame = capture.read()
-    frame_resized=rescaleImage(frame,scale=0.1)
-
-    cv.imshow("video", frame)
-    cv.imshow("video resized",frame_resized)
-    if cv.waitKey(20) & 0xFF==ord("d"):
+    ret, frame = cap.read()
+    if not ret:
         break
-capture.release()
-cv.destroyAllWindows 
+
+    cv2.imshow('Webcam Live Feed', frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
